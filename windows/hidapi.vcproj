@@ -178,6 +178,10 @@
 				RelativePath=".\hid.c"
 				>
 			</File>
+			<File
+				RelativePath=".\userapi.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -186,6 +190,10 @@
 			>
 			<File
 				RelativePath="..\hidapi\hidapi.h"
+				>
+			</File>
+			<File
+				RelativePath="..\hidapi\userapi.h"
 				>
 			</File>
 		</Filter>

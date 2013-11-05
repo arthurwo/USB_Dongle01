@@ -74,6 +74,105 @@ extern "C" {
 			return (0);
 	}
 	
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Open      (DWORD DeviceType,DWORD DeviceInd,DWORD Reserved)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Close     (DWORD DeviceType,DWORD DeviceInd)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_SetMode   (DWORD DeviceType,DWORD DeviceInd,BYTE ModeValue)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_GetMode   (DWORD DeviceType,DWORD DeviceInd)
+	{	DWORD ans = 0;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_SetClk    (DWORD DeviceType,DWORD DeviceInd,DWORD ClkValue)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_GetClk    (DWORD DeviceType,DWORD DeviceInd)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_SetChannel(DWORD DeviceType,DWORD DeviceInd,BYTE ChannelValue)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_GetChannel(DWORD DeviceType,DWORD DeviceInd)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Read      (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO  pDataInfo)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Write     (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO pDataInfo)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Connect   (DWORD DeviceType,DWORD DeviceInd,DWORD Reserved)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_SetIO     (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO pDataInfo)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_GetIO     (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO pDataInfo)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Start     (DWORD DeviceType,DWORD DeviceInd)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_WriteByte (DWORD DeviceType,DWORD DeviceInd,BYTE DataValue)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_ReadByte  (DWORD DeviceType,DWORD DeviceInd,BYTE AckValue)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Stop      (DWORD DeviceType,DWORD DeviceInd)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+    
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Write2    (DWORD DeviceType,DWORD DeviceInd,BYTE *buf,int buflen)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
+	DWORD	HID_API_EXPORT_CALL  GYI2C_Read2	(DWORD DeviceType,DWORD DeviceInd,BYTE *buf,DWORD buflen)
+	{	DWORD ans = -1;
+		return ans;
+	}
+
 
 #ifdef __cplusplus
 } // extern "C"

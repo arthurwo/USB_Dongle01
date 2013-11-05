@@ -27,11 +27,16 @@
 #ifndef HIDAPI_H__
 #define HIDAPI_H__
 
-#include "hidapi.h"
+#include <wchar.h>
 
 #ifdef _WIN32
+	#if defined(DLL_BUILD)
       #define HID_API_EXPORT __declspec(dllexport)
       #define HID_API_CALL
+	#else
+      #define HID_API_EXPORT __declspec(dllimport)
+      #define HID_API_CALL
+	#endif
 #else
       #define HID_API_EXPORT /**< API export macro */
       #define HID_API_CALL /**< API call macro */

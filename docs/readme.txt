@@ -15,3 +15,6 @@ use dll file == native
 
 use dll file == dotnet
 >> LibUsbDotNet: 2.2.8.104
+
+Labview
+C:\Program Files (x86)\National Instruments\LabVIEW 2011\user.lib\hidapi

@@ -318,7 +318,7 @@ extern "C" {
 			@ingroup API
 			@param device A device handle returned from hid_open().
 		*/
-		void HID_API_EXPORT HID_API_CALL hid_close(hid_device *device);
+		int HID_API_EXPORT HID_API_CALL hid_close(hid_device *device);
 
 		/** @brief Get The Manufacturer String from a HID device.
 

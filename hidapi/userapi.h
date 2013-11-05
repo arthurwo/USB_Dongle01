@@ -100,7 +100,29 @@ typedef struct GYI2C_DATA_INFO{
 	BYTE Reserved[4];		// Reserved ╰参玂痙
 	}GYI2C_DATA_INFO,*pGYI2C_DATA_INFO;
 
+	/** @brief Device turn on
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param Reserved   >> input. 0 Only
+
+		@returns
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Open      (DWORD DeviceType,DWORD DeviceInd,DWORD Reserved);
+
+	/** @brief Device turn off
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+
+		@returns
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Close     (DWORD DeviceType,DWORD DeviceInd);
 
 	/** @brief Set Operation mode as Easy I2C or Timing I2C
@@ -134,7 +156,7 @@ typedef struct GYI2C_DATA_INFO{
 		@ingroup USRAPI
 		@param DeviceType >> input. 1 Only for DEV_GY7501A
 		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
-		@param ClkValue   >> input. 1 - 400, unit: 1KHz
+		@param ClkValue   >> input. unit: 1KHz; Easy I2C from 1 to 800 ; Timing I2C from 1 to 235 
 
 		@returns
 		   -1: device off or device not found
@@ -150,18 +172,19 @@ typedef struct GYI2C_DATA_INFO{
 		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
 
 		@returns
-			1 - 400, unit: 1KHz
+            Easy I2C   from 1 to 800 
+			Timing I2C from 1 to 235 
 	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_GetClk    (DWORD DeviceType,DWORD DeviceInd);
 
 	/** @brief Set I2C Channel
 
 		@ingroup USRAPI
-		@param DeviceType >> input. 1 Only for DEV_GY7501A
-		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
-		@param ChValue   >> 
+		@param DeviceType   >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd    >> input. 0 Only for DEV_GY7501A
+		@param ChannelValue >> input. 0 Only for DEV_GY7501A
 
-		@returns
+		returns
 		   -1: device off or device not found
 			0: fail
 			1: success
@@ -173,27 +196,202 @@ typedef struct GYI2C_DATA_INFO{
 		@ingroup USRAPI
 		@param DeviceType >> input. 1 Only for DEV_GY7501A
 		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
-		@param ChValue   >> 
 
 		@returns
 		   Currently channel selected
 	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_GetChannel(DWORD DeviceType,DWORD DeviceInd);
 
+	/** @brief Receive Data command at EASY I2C mode
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param pDataInfo  >> struct of pointer.
+
+		        == input ==
+				pDataInfo.SlaveAddr    >> the I2C address (bit7-1 , bit0 always 1)  of target 
+				pDataInfo.Databuffer[] >> insert SlaveAddr if you need access another target that have different I2C address
+				pDataInfo.WriteNum     >> insert the bytes of SlaveAddr if needed or 0 for read immediately
+				pDataInfo.ReadNum      >> insert the length of bytes need to read
+				pDataInfo.DlyMsRead    >> insert delay time (600 to 800 normal) to wait target return data to GY7501A and then return data through usb protocol
+
+		        == output ==
+				pDataInfo.Databuffer[] >> Receive data will place here if return 1. 
+
+		@returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Read      (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO  pDataInfo);
+
+	/** @brief Transmit Data command at EASY I2C mode
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param pDataInfo  >> struct of pointer.
+
+		        == input ==
+				pDataInfo.SlaveAddr    >> the I2C address (bit7-1 , bit0 always 0)  of target 
+				pDataInfo.Databuffer[] >> insert data frame you need to transmit to.
+				pDataInfo.WriteNum     >> insert the length of bytes need to transmit
+				pDataInfo.ReadNum      >> always 0
+				pDataInfo.DlyMsRead    >> insert delay time (600 to 800 normal) to wait target return data to GY7501A and then return data through usb protocol
+
+		@returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Write     (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO pDataInfo);
+
+	/** @brief Check Device is still connected
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param Reserved   >> input. 0 Only
+
+		@returns
+			0: connected fail
+			1: connected success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Connect   (DWORD DeviceType,DWORD DeviceInd,DWORD Reserved);//琩高USB-I2C砞称琌眖╰参い奔絬┪砆┺
 
+	/** @brief Set GPIO
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param pDataInfo  >> struct of pointer.
+
+		        == input ==
+				pDataInfo.IoSel  >> bit3-0 means IO_3 to IO_0 
+				pDataInfo.IoData >> bit3-0, bit mapping
+
+		returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_SetIO     (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO pDataInfo);
+
+	/** @brief Get GPIO
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param pDataInfo  >> struct of pointer.
+
+		        == input ==
+				pDataInfo.IoSel  >> bit3-0 means IO_3 to IO_0 
+				pDataInfo.IoData >> bit3-0, bit mapping
+
+		returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_GetIO     (DWORD DeviceType,DWORD DeviceInd,pGYI2C_DATA_INFO pDataInfo);
 
+	/** @brief Set a START for Timing I2C Mode 
+
+		@ingroup USRAPI
+		@param DeviceType   >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd    >> input. 0 Only for DEV_GY7501A
+
+		returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Start     (DWORD DeviceType,DWORD DeviceInd);
+
+	/** @brief Write one byte for Timing I2C Mode 
+
+		@ingroup USRAPI
+		@param DeviceType   >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd    >> input. 0 Only for DEV_GY7501A
+		@param DataValue    >> input. data to transmit
+
+		returns
+			0: NACK
+			1: ACK
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_WriteByte (DWORD DeviceType,DWORD DeviceInd,BYTE DataValue);
+
+	/** @brief Read one byte for Timing I2C Mode 
+
+		@ingroup USRAPI
+		@param DeviceType   >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd    >> input. 0 Only for DEV_GY7501A
+		@param AckValue     >> output. 0: NACK, 1: ACK
+
+		returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_ReadByte  (DWORD DeviceType,DWORD DeviceInd,BYTE AckValue);
+
+	/** @brief Set a STOP for Timing I2C Mode 
+
+		@ingroup USRAPI
+		@param DeviceType   >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd    >> input. 0 Only for DEV_GY7501A
+
+		returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Stop      (DWORD DeviceType,DWORD DeviceInd);
-    //GYI2C_Write2,GYI2C_Read2ㄧ计籔GYI2C_Read, GYI2C_Writeㄧ计妓度琌把计摸畉
+
+	/** @brief Transmit Data command at EASY I2C mode ( alternate method )
+
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param buf[]      >> pointer. data buffer 
+		@param buflen     >> length of bytes need to transmit
+
+                == input ==
+				buf[0]    >> the I2C address (bit7-1 , bit0 always 0)  of target
+				buf[.]    >> insert data frame you need to transmit to.
+ 
+				example: buf[]=	A0,00,11,22,33,44
+
+		@returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Write2    (DWORD DeviceType,DWORD DeviceInd,BYTE *buf,int buflen);
-					                                                           //WRITE buf[]=	A0,00,11,22,33,44	
+					                                                           	
+	/** @brief Receive Data command at EASY I2C mode ( alternate method )
+        
+		@ingroup USRAPI
+		@param DeviceType >> input. 1 Only for DEV_GY7501A
+		@param DeviceInd  >> input. 0 Only for DEV_GY7501A
+		@param buf[]      >> pointer. data buffer 
+		@param buflen     >> length of bytes need to read.
+
+                == input ==
+				buf[0]          >> the I2C address (bit7-1 , bit0 always 1)  of target 
+				buf[1]          >> insert SlaveAddr byte0 if you need access another target that have different I2C address 
+				buf[2]          >> insert SlaveAddr byte1 if you need access another target that have different I2C address 
+				buf[buflen - 2] >> insert the length of bytes need to read (MSB)
+				buf[buflen - 1] >> insert the length of bytes need to read (LSB)
+                == output ==
+				buf[]           >> Receive data will place here if return 1. 
+
+		@returns
+		   -1: device off or device not found
+			0: fail
+			1: success
+	*/
 	DWORD	HID_API_EXPORT_CALL  GYI2C_Read2	(DWORD DeviceType,DWORD DeviceInd,BYTE *buf,DWORD buflen);
 /*
 buf[0]=slaveaddr;	//I2C眖砞称

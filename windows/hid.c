@@ -731,16 +731,17 @@ int HID_API_EXPORT HID_API_CALL hid_get_feature_report(hid_device *dev, unsigned
 #endif
 }
 
-void HID_API_EXPORT HID_API_CALL hid_close(hid_device *dev)
+int HID_API_EXPORT HID_API_CALL hid_close(hid_device *dev)
 {
 	if (!dev)
-		return;
+		return 0;
 	CancelIo(dev->device_handle);
 	CloseHandle(dev->ol.hEvent);
 	CloseHandle(dev->device_handle);
 	LocalFree(dev->last_error_str);
 	free(dev->read_buf);
 	free(dev);
+	return 1;
 }
 
 int HID_API_EXPORT_CALL HID_API_CALL hid_get_manufacturer_string(hid_device *dev, wchar_t *string, size_t maxlen)
@@ -801,7 +802,7 @@ HID_API_EXPORT const wchar_t * HID_API_CALL  hid_error(hid_device *dev)
 	return (wchar_t*)dev->last_error_str;
 }
 
-
+#if(0)
 //#define PICPGM
 //#define S11
 #define P32
@@ -820,7 +821,7 @@ HID_API_EXPORT const wchar_t * HID_API_CALL  hid_error(hid_device *dev)
   unsigned short VendorID = 0x04d8;
   unsigned short ProductID = 0x0033;
 #endif
-
+#endif
 
 #if 0
 int __cdecl main(int argc, char* argv[])
